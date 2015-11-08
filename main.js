@@ -1,7 +1,6 @@
 $(document).ready(init);
 
 function init() {
-	//drawCloud(d3.select('#word-cloud'));
 	drawCloud(d3.select('#word-cloud'));
 
 	$('.btn').click(function() {
