@@ -41,9 +41,8 @@ rect:hover {  fill:blue; }
 </div>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
-//function dashboard(id, fData){
 
-//var fData;
+// Reference http://bl.ocks.org/NPashaP/96447623ef4d342ee09b
 
 function dashboard(id, fData) { 
     var barColor = 'steelblue';
@@ -280,6 +279,7 @@ function dashboard(id, fData) {
 //    'HillaryClinton': 14,
 //    'WhyImNotVotingForHillary': 7}}
 // ];
+//dashboard('#dashboard',freqData);
 
 
 d3.json('./dashboard_data.json', function(error, freqData){
@@ -287,8 +287,6 @@ d3.json('./dashboard_data.json', function(error, freqData){
 
     dashboard('#dashboard',freqData);
 })
-
-//dashboard('#dashboard',freqData);
 
 </script>
 
