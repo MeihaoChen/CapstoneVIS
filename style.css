@@ -1,5 +1,4 @@
 body{
-    width:21060px;
     margin:50px auto;
 }
 path {  stroke: #fff; }
@@ -40,6 +39,7 @@ rect:hover {  fill:blue; }
 .bar text {
   fill: #fff;
 }
+
 
 .node {
   font: 300 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
