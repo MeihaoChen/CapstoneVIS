@@ -1,50 +1,13 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
-<style>
-body{
-    width:21060px;
-    margin:50px auto;
-}
-path {  stroke: #fff; }
-path:hover {  opacity:0.9; }
-rect:hover {  fill:blue; }
-.axis {  font: 10px sans-serif; }
-.legend tr{    border-bottom:1px solid grey; }
-.legend tr:first-child{    border-top:1px solid grey; }
+function drawDash(ContainerDiv) {
+    d3.json('./data/dashboard_data.json', function(error, freqData){
+        if (error) throw error;
 
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
+        dashboard(ContainerDiv,freqData);
+    });
 }
 
-.x.axis path {  display: none; }
-.legend{
-    margin-bottom:76px;
-    display:inline-block;
-    border-collapse: collapse;
-    border-spacing: 0px;
-}
-.legend td{
-    padding:4px 5px;
-    vertical-align:bottom;
-}
-.legendFreq, .legendPerc{
-    align:right;
-    width:50px;
-}
 
-</style>
-<body>
-<div id='dashboard'>
-</div>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script>
-
-// Reference http://bl.ocks.org/NPashaP/96447623ef4d342ee09b
-
-function dashboard(id, fData) { 
+function dashboard(ContainerDiv, fData) { 
     var barColor = 'steelblue';
     function segColor(c){ return {Hillary2016:"#807dba", HillaryClinton:"#e08214",WhyImNotVotingForHillary:"#41ab5d"}[c]; }
     
@@ -58,7 +21,7 @@ function dashboard(id, fData) {
         hGDim.h = 300 - hGDim.t - hGDim.b;
             
         //create svg for histogram.
-        var hGsvg = d3.select(id).append("svg")
+        var hGsvg = ContainerDiv.append("svg")
             .attr("width", hGDim.w + hGDim.l + hGDim.r)
             .attr("height", hGDim.h + hGDim.t + hGDim.b).append("g")
             .attr("transform", "translate(" + hGDim.l + "," + hGDim.t + ")");
@@ -140,7 +103,7 @@ function dashboard(id, fData) {
         pieDim.r = Math.min(pieDim.w, pieDim.h) / 2;
                 
         // create svg for pie chart.
-        var piesvg = d3.select(id).append("svg")
+        var piesvg = ContainerDiv.append("svg")
             .attr("width", pieDim.w).attr("height", pieDim.h).append("g")
             .attr("transform", "translate("+pieDim.w/2+","+pieDim.h/2+")");
         
@@ -188,7 +151,7 @@ function dashboard(id, fData) {
         var leg = {};
             
         // create table for legend.
-        var legend = d3.select(id).append("table").attr('class','legend');
+        var legend = ContainerDiv.append("table").attr('class','legend');
         
         // create one row per segment.
         var tr = legend.append("tbody").selectAll("tr").data(lD).enter().append("tr");
@@ -196,7 +159,7 @@ function dashboard(id, fData) {
         // create the first column for each segment.
         tr.append("td").append("svg").attr("width", '16').attr("height", '16').append("rect")
             .attr("width", '16').attr("height", '16')
-			.attr("fill",function(d){ return segColor(d.type); });
+            .attr("fill",function(d){ return segColor(d.type); });
             
         // create the second column for each segment.
         tr.append("td").text(function(d){ return d.type;});
@@ -240,53 +203,3 @@ function dashboard(id, fData) {
         pC = pieChart(tF), // create the pie-chart.
         leg= legend(tF);  // create the legend.
 }
-
-</script>
-
-
-<script>
-// var freqData = 
-// [{'State': 'New York',
-//   'freq': {'Hillary2016': 67,
-//    'HillaryClinton': 1835,
-//    'WhyImNotVotingForHillary': 46}},
-//  {'State': 'California',
-//   'freq': {'Hillary2016': 99,
-//    'HillaryClinton': 64,
-//    'WhyImNotVotingForHillary': 12}},
-//  {'State': 'Florida',
-//   'freq': {'Hillary2016': 51,
-//    'HillaryClinton': 37,
-//    'WhyImNotVotingForHillary': 7}},
-//  {'State': 'Texas',
-//   'freq': {'Hillary2016': 40,
-//    'HillaryClinton': 24,
-//    'WhyImNotVotingForHillary': 7}},
-//  {'State': 'Illinois',
-//   'freq': {'Hillary2016': 34,
-//    'HillaryClinton': 16,
-//    'WhyImNotVotingForHillary': 4}},
-//  {'State': 'New Jersey',
-//   'freq': {'Hillary2016': 25,
-//    'HillaryClinton': 20,
-//    'WhyImNotVotingForHillary': 3}},
-//  {'State': 'Pennsylvania',
-//   'freq': {'Hillary2016': 37,
-//    'HillaryClinton': 6,
-//    'WhyImNotVotingForHillary': 2}},
-//  {'State': 'Georgia',
-//   'freq': {'Hillary2016': 20,
-//    'HillaryClinton': 14,
-//    'WhyImNotVotingForHillary': 7}}
-// ];
-//dashboard('#dashboard',freqData);
-
-
-d3.json('./dashboard_data.json', function(error, freqData){
-    if (error) throw error;
-
-    dashboard('#dashboard',freqData);
-})
-
-</script>
-
