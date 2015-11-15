@@ -8,6 +8,9 @@ var b = {
   w: 75, h: 30, s: 3, t: 10
 };
 
+
+# originally from http://bl.ocks.org/kerryrodden/7090426
+
 // Mapping of step names to colors.
 // var colors = {
 //   "home": "#5687d1",
