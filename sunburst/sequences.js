@@ -9,7 +9,7 @@ var b = {
 };
 
 
-# originally from http://bl.ocks.org/kerryrodden/7090426
+// originally from http://bl.ocks.org/kerryrodden/7090426
 
 // Mapping of step names to colors.
 // var colors = {
