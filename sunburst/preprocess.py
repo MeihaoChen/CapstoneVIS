@@ -47,7 +47,7 @@ def buildData(text):
 	preliminary = [i for i in text if len(i) > 5 and i[0] in cnt_start.keys() and i[1] in cnt_second.keys() and i[2] in cnt_third.keys()
     				and i[3] in cnt_fourth.keys() and i[4] in cnt_fifth.keys() and i[5] in cnt_sixth.keys()]
 
-	all_words = dict(collections.Counter(list(itertools.chain(*preliminary))).most_common(50))
+	all_words = collections.Counter(list(itertools.chain(*preliminary))).most_common(50)
     
     # Slice more than 6 elements in a sequence will return error
     # still trying to fix that
@@ -79,6 +79,6 @@ if __name__ == '__main__':
 	color = ['3182bd','6baed6','9ecae1','c6dbef','e6550d','fd8d3c','fdae6b','fdd0a2','31a354','74c476','a1d99b',
 			'c7e9c0','756bb1','9e9ac8','bcbddc','dadaeb','636363','969696','bdbdbd','d9d9d9']
 	for i in set(all_words):
-		color_profile[i] = random.choice(color)
+		color_profile[i[0]] = random.choice(color)
 	json.dump(color_profile,open('color_profile.json','wb'))
 
