@@ -8,9 +8,6 @@ var b = {
   w: 75, h: 30, s: 3, t: 10
 };
 
-
-// originally from http://bl.ocks.org/kerryrodden/7090426
-
 // Mapping of step names to colors.
 // var colors = {
 //   "home": "#5687d1",
@@ -23,7 +20,7 @@ var b = {
 
 var colors;
 
-d3.json("./color_profile.json", function(error, data) {
+d3.json("../data/color_profile.json", function(error, data) {
   if (error) throw error;
   
   colors = data;
@@ -51,7 +48,7 @@ var arc = d3.svg.arc()
 
 // Use d3.text and d3.csv.parseRows so that we do not need to have a header
 // row, and can receive the csv as an array of arrays.
-d3.text("tweet_text.csv", function(text) {
+d3.text("../data/tweet_text.csv", function(text) {
   var csv = d3.csv.parseRows(text);
   var json = buildHierarchy(csv);
   createVisualization(json);
