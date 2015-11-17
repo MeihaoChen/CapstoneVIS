@@ -1,14 +1,16 @@
 function drawCloud(containerDiv) {
   var width = 750,
-      height = 500;
+      height = 500,
+      scale = 700;
 
   //var nameScale = d3.scale.linear().range([10,150]);
 
   var fill = d3.scale.category20();
-  d3.csv("data/nameInTweet.csv", function(data) {
+  d3.csv("data/wordCount.csv", function(data) {
     var names = data
-          .map(function(d) {return{text:d.word, size:+d.count};})
-          .slice(10,100);
+          .map(function(d) {return{text:d.word, size:+d.count/scale};})
+          .sort(function(a,b) {return d3.descending(a.size,b.size); })
+          .slice(0,100);
     //nameScale.domain([
     //  d3.min(names, function(d) {return d.size;}),
     //  d3.max(names, function(d) {return d.size;})
@@ -20,7 +22,7 @@ function drawCloud(containerDiv) {
       .padding(5)
       .rotate(function() { return ~~(Math.random() * 2) * 90; })
       .font("Impact")
-      .fontSize(function(d) { return (d.size/100); })
+      .fontSize(function(d) { return d.size; })
       .on("end", draw)
       .start();
   });
@@ -40,6 +42,27 @@ function drawCloud(containerDiv) {
         .attr("transform", function(d) {
           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
         })
-        .text(function(d) { return d.text; });
+        .text(function(d) { return d.text; })
+        .on("mouseover", mouseover)
+        .on("mouseout", mouseout);
+  };
+
+  function mouseover(d){
+    d3.select(this).style("font-size", d.size * 1.1 + "px");
+    var xPosition = parseFloat(d3.select(this).attr("cx"));
+    var yPosition = parseFloat(d3.select(this).attr("cy"));
+      //Update the tooltip position and value
+    d3.select("#tooltip")
+      .style("left", xPosition + "px")
+      .style("top", yPosition + "px")
+      .select("#value")
+      .text(d.size*scale);
+
+    d3.select("#tooltip").classed("hidden", false);
+
+  };
+  function mouseout(d){
+    d3.select(this).style("font-size", d.size / 1.1 + "px");
+    d3.select("#tooltip").classed("hidden", true);
   };
 }
