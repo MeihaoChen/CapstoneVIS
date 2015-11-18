@@ -19,7 +19,7 @@ function drawCloud(containerDiv) {
   d3.layout.cloud()
       .size([width,height])
       .words(names)
-      .padding(5)
+      .padding(1)
       .rotate(function() { return ~~(Math.random() * 2) * 90; })
       .font("Impact")
       .fontSize(function(d) { return d.size; })
@@ -49,12 +49,11 @@ function drawCloud(containerDiv) {
 
   function mouseover(d){
     d3.select(this).style("font-size", d.size * 1.1 + "px");
-    var xPosition = parseFloat(d3.select(this).attr("cx"));
-    var yPosition = parseFloat(d3.select(this).attr("cy"));
+    var offset = $(this).offset()
       //Update the tooltip position and value
     d3.select("#tooltip")
-      .style("left", xPosition + "px")
-      .style("top", yPosition + "px")
+      .style("left", offset.left)
+      .style("top", offset.top)
       .select("#value")
       .text(d.size*scale);
 

@@ -133,7 +133,6 @@ rect:hover {  fill:blue; }
   font-size: 2.5em;
 }
 
-text:hover { opacity: .7 !important; }
 #tooltip {
         position: absolute;
         width: 200px;
