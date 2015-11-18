@@ -15,7 +15,7 @@ function drawCloud(containerDiv) {
     //  d3.min(names, function(d) {return d.size;}),
     //  d3.max(names, function(d) {return d.size;})
     //  ]);
-  
+
   d3.layout.cloud()
       .size([width,height])
       .words(names)
