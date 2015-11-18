@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
-    <script type="text/javascript" src="dashboard.js"></script> 
+    <script type="text/javascript" src="drawPieTest.js"></script> 
     <script type="text/javascript" src="show_reel.js"></script> 
     <script type="text/javascript" src="dashboard_graph.js"></script> 
     <script type="text/javascript" src="sequences.js"></script>  
@@ -94,11 +94,11 @@
               <span class="text-muted">Something else</span>
             </div>
             <div class="col-xs-8 col-sm-4 placeholder">
-              <form>
-                <label><input type="radio" name="dataset" value="Hashgag" checked> Hashtag</label>
-                <label><input type="radio" name="dataset" value="Geolocation"> Geolocation</label>
-                <label><input type="radio" name="dataset" value="source"> Source</label>
-                <label><input type="radio" name="dataset" value="user"> User Mention</label>
+              <form id="pie">
+                <label><input type="radio" name="pieChart" value="hashtag" checked> Hashtag</label>
+                <label><input type="radio" name="pieChart" value="geolocation" > Geolocation</label>
+                <label><input type="radio" name="pieChart" value="source" > Source</label>
+                <label><input type="radio" name="pieChart" value="user"> User Mention</label>
             </form>
             </div>
           </div>

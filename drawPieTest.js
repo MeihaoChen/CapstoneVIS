@@ -1,8 +1,13 @@
-function selectPie(infileArray, containerDiv){ 
+function selectPie(infileObj, containerDiv){ 
+  var r0 = d3.select('input[name="pieChart"]:checked').node().value;
+  drawPie(infileObj[r0], containerDiv);
+
   d3.selectAll("input")
-        .on("change", change);
+      .on("change", change);
+
   function change(){
-    
+    var radio = d3.select('input[name="pieChart"]:checked').node().value;
+    drawPie(infileObj[radio], containerDiv); 
   }
 
 
