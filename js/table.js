@@ -11,7 +11,7 @@
     // The table generation function
     function tabulate(data, columns) {
         var table = containerDiv.append("table")
-                .attr("style", "margin-left: 250px"),
+                .attr("style", "margin-left: 50px"),
             thead = table.append("thead"),
             tbody = table.append("tbody");
 

@@ -65,8 +65,8 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="visShow.html">Reports</a></li>
+            <li><a href="index.html">Overview </a></li>
+            <li class="active"><a href="#">Reports<span class="sr-only">(current)</span></a></li>
             <li><a href="#">Analytics</a></li>
             <li><a href="#">Export</a></li>
           </ul>
@@ -84,24 +84,52 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
+          <h1 class="page-header">Report</h1>
 
           <div class="row placeholders">
-            <div class="col-xs-8 col-sm-8 placeholder">
-              <svg id="pie1"></svg>
+            <div class="col-xs-12 col-sm-8 placeholder" id="word-cloud">
+              <h2>word cloud</h2>
             </div>
-            <div class="col-xs-8 col-sm-4 placeholder">
-              <form id="pie">
-                <label><input type="radio" name="pieChart" value="hashtag" checked> Hashtag</label>
-                <label><input type="radio" name="pieChart" value="geolocation" > Geolocation</label>
-                <label><input type="radio" name="pieChart" value="source" > Source</label>
-                <label><input type="radio" name="pieChart" value="user"> User Mention</label>
-            </form>
+            <div id="tooltip" class="hidden">
+              <p><strong>Word Count: </strong></p>
+              <p><span id="value">100</span></p>
             </div>
           </div>
 
-          <h2 class="sub-header">Popular Tweets</h2>
-          <div class="table-responsive" id='table'>
+          <div class="row placeholders">
+            <div class="col-xs-12 col-sm-8 placeholder" id="showReel">
+              <h2>show reel</h2>
+            </div>
+          </div>
+
+          <div class="row placeholders">
+            <div class="col-xs-12 col-sm-8 placeholder" id="dashboard">
+              <h2>dashboard</h2>
+            </div>
+          </div>
+
+          <div class="row placeholders">
+            <div class="col-xs-12 col-sm-8 placeholder" id="hier">
+              <h2>hierarchy bund</h2>
+            </div>
+          </div>
+
+          <div class="row placeholders">
+            <div class="col-xs-10 col-sm-8 placeholder" id="sunburst">
+              <h2>sunburst</h2>
+              <div id="sequence"></div>
+              <div id="chart">
+                <div id="explanation" style="visibility: hidden;">
+                  <span id="percentage"></span><br/>
+                  of tweets begin with this sequence of words
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-2 col-sm-8 placeholder" id="sidebar">
+              <input type="checkbox" id="togglelegend"> Legend<br/>
+              <div id="legend" style="visibility: hidden;"></div>
+            </div>
+          </div>
            
           </div>
         </div>
