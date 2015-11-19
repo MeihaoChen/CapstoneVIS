@@ -7,11 +7,13 @@ function init() {
 	drawDash(d3.select('#dashboard'));
 	drawHier(d3.select('#hier'));
 	drawSunburst();
+
 	var pieFiles = {'hashtag':'data/hashCount.csv',
 	                'geolocation':'data/locaCount.csv',
 	                'source':'data/sourceCount.csv',
 	                'user':'data/userCount.csv'}
 	selectPie(pieFiles, d3.select('#pie1'));
+	drawTable('data/result_tweet.txt',d3.select('#table'));
 
 	$('.btn').click(function() {
 		$('.btn').removeClass('active');
