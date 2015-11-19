@@ -1,15 +1,26 @@
 function drawDash(inputObj, ContainerDiv) {
     d3.json('./data/dashboard_data.json', function(error, freqData){
         if (error) throw error;
-        var r0 = d3.selectAll('input[type="checkbox"]:checked').node().value;
-        console.log(r0);
+        // var r0 = d3.selectAll('input[type="checkbox"]:checked').node().value;
+        var r0 = $('input:checkbox:checked').map(function() {
+            return this.value;
+        }).get();
 
-        dashboard(ContainerDiv,freqData);
-    });
+        dashboard(ContainerDiv,freqData,r0);
+
+        d3.selectAll('input[type="checkbox"]').on("change", change);
+
+        function change(){
+            var radio = $('input:checkbox:checked').map(function() {
+                return this.value;
+            }).get();
+            console.log(radio);
+            dashboard(ContainerDiv, freqData,radio); 
+        }
+    })
 }
 
-
-function dashboard(ContainerDiv, fData) { 
+function dashboard(ContainerDiv, fData, checkedValue) { 
     var barColor = 'steelblue';
     var tagNameDup = [];
     
@@ -37,7 +48,8 @@ function dashboard(ContainerDiv, fData) {
     }
     
     // list of hashtags
-    var tagName = tagNameDup.unique()[0];
+    // var tagName = tagNameDup.unique()[0];
+    var tagName = checkedValue;
     var colorTotal = d3.scale.category20().range();
     var colorful = colorTotal.sort( function() { return 0.5 - Math.random() } ).slice(0, tagName.length);
 
