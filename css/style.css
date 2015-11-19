@@ -1,5 +1,7 @@
 body{
     margin:50px auto;
+    font-family: 'Helvetica Neue', Helvetica; 
+    font-weight: 300; padding: 20px;
 }
 path {  stroke: #fff; }
 path:hover {  opacity:0.9; }

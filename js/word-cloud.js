@@ -8,7 +8,7 @@ function drawCloud(containerDiv) {
   var fill = d3.scale.category20();
   d3.csv("data/wordCount.csv", function(data) {
     var names = data
-          .map(function(d) {return{text:d.word, size:+d.count/scale};})
+          .map(function(d) {return{text:d.word, size:+d.count/scale, count:+d.count};})
           .sort(function(a,b) {return d3.descending(a.size,b.size); })
           .slice(0,100);
     //nameScale.domain([
@@ -55,7 +55,7 @@ function drawCloud(containerDiv) {
       .style("left", offset.left)
       .style("top", offset.top)
       .select("#value")
-      .text(d.size*scale);
+      .text(d.count);
 
     d3.select("#tooltip").classed("hidden", false);
 

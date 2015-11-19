@@ -13,7 +13,7 @@ function selectPie(infileObj, containerDiv){
 
 
  function drawPie(infile, containerDiv) {
-  d3.csv(infile, function(data) {
+  d3.csv(infile, function(error, data) {
     var piedata = data
           .map(function(d) {return{key:d.word, y:+d.count};})
           .sort(function(a,b) {return d3.descending(a.y,b.y);})
