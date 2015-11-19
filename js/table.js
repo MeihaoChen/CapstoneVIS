@@ -5,7 +5,6 @@
           .map(function(d) {return{count:+d.count,tweet:d.word};})
           .sort(function(a,b) {return d3.descending(a.count,b.count); })
           .slice(0,10);
-        console.log(tweets)
     
     var Table = tabulate(tweets, ["count","tweet"]);
     // The table generation function
@@ -45,4 +44,9 @@
     };
 
     });
-}
+};
+function slide(containerDiv, textContainerDiv){ 
+    containerDiv.call(d3.slider().axis(true).min(10).on("slide", function(evt, value) {
+      textContainerDiv.text(value);  
+    }));
+};

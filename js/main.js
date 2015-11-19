@@ -15,6 +15,8 @@ function init() {
 	selectPie(pieFiles, d3.select('#pie1'));
 	drawTable('data/result_tweet.txt',d3.select('#table'));
 
+	slide(d3.select('#slider'), d3.select('#sliderText'));
+
 	$('.nav-sidebar').click(function() {
 		$('.nav-sidebar').removeClass('active');
 		$(this).addClass('active');

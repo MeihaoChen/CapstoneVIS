@@ -17,9 +17,11 @@
     <script src="bower_components/d3/d3.min.js"></script>
     <script src="bower_components/nvd3/build/nv.d3.js"></script>
     <script src="bower_components/d3-cloud/build/d3.layout.cloud.js"></script>
+    <script src="bower_components/d3-slider/d3.slider.js"></script>
     <link rel="stylesheet" type="text/css" href="bower_components/nvd3/build/nv.d3.min.css">
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/d3-slider/d3.slider.css">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
     <script type="text/javascript" src="js/drawPieTest.js"></script> 
     <script type="text/javascript" src="js/table.js"></script>
@@ -101,8 +103,12 @@
           </div>
 
           <h2 class="sub-header">Popular Tweets</h2>
-          <div class="table-responsive" id='table'>
-           
+          <div class="row placeholders">
+            <h3>Top: <span id="sliderText">10</span></h3>
+            <div class = "d3-slider" id="slider"></div>
+          </div>
+          <div class="placeholders">
+            <div id='table' class="table-responsive"></div>
           </div>
         </div>
       </div>
