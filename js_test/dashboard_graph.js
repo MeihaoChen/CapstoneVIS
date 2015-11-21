@@ -1,8 +1,6 @@
-function drawDash(infile, inputObj, ContainerDiv) {
-    d3.json(infile, function(error, freqData){
+function drawDash(ContainerDiv) {
+    d3.json('data_o/dashboard_data.json', function(error, freqData){
         if (error) throw error;
-        var r0 = d3.selectAll('input[type="checkbox"]:checked').node().value;
-        console.log(r0);
 
         dashboard(ContainerDiv,freqData);
     });
@@ -11,60 +9,10 @@ function drawDash(infile, inputObj, ContainerDiv) {
 
 function dashboard(ContainerDiv, fData) { 
     var barColor = 'steelblue';
-    var tagNameDup = [];
-    
-    fData.forEach(function(d){
-        tagNameDup.push(
-            Object.keys(d.freq)
-        );
-    });
-
-    Array.prototype.contains = function(v) {
-        for(var i = 0; i < this.length; i++) {
-            if(this[i] === v) return true;
-        }
-        return false;
-    };
-
-    Array.prototype.unique = function() {
-        var arr = [];
-        for(var i = 0; i < this.length; i++) {
-            if(!arr.contains(this[i])) {
-                arr.push(this[i]);
-            }
-        }
-        return arr; 
-    }
-    
-    // list of hashtags
-    var tagName = tagNameDup.unique()[0];
-    var colorTotal = d3.scale.category20().range();
-    var colorful = colorTotal.sort( function() { return 0.5 - Math.random() } ).slice(0, tagName.length);
-
-    function toObject(names, values) {
-        var result = {};
-        for (var i = 0; i < names.length; i++)
-            result[names[i]] = values[i];
-        return result;
-    }
-
-    function segColor(c){ return toObject(tagName,colorful)[c]; }
-
-    function sum( obj ) {
-        var sum = 0;
-        for( var el in obj ) {
-            if( obj.hasOwnProperty( el ) ) {
-                sum += parseFloat( obj[el] );
-            }
-        }
-        return sum;
-    }
-
+    function segColor(c){ return {Hillary2016:"#807dba", HillaryClinton:"#e08214",WhyImNotVotingForHillary:"#41ab5d"}[c]; }
     
     // compute total for each state.
-    fData.forEach(function(d){
-        d.total=sum(d.freq)
-    });
+    fData.forEach(function(d){d.total=d.freq.Hillary2016+d.freq.HillaryClinton+d.freq.WhyImNotVotingForHillary;});
     
     // function to handle histogram.
     function histoGram(fD){
@@ -244,10 +192,8 @@ function dashboard(ContainerDiv, fData) {
     }
     
     // calculate total frequency by segment for all state.
-    var tF = tagName.map(function(d){ 
-        return {type:d, freq: d3.sum(fData.map(function(t){ 
-            return t.freq[d];})
-        )}; 
+    var tF = ['Hillary2016','HillaryClinton','WhyImNotVotingForHillary'].map(function(d){ 
+        return {type:d, freq: d3.sum(fData.map(function(t){ return t.freq[d];}))}; 
     });  
     
     // calculate total frequency by state for all segment.

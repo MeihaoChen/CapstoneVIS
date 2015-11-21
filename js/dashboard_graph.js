@@ -14,7 +14,7 @@ function drawDash(inputObj, ContainerDiv) {
             var radio = $('input:checkbox:checked').map(function() {
                 return this.value;
             }).get();
-            console.log(radio);
+            // console.log(radio);
             dashboard(ContainerDiv, freqData,radio); 
         }
     })
@@ -30,26 +30,29 @@ function dashboard(ContainerDiv, fData, checkedValue) {
         );
     });
 
-    Array.prototype.contains = function(v) {
-        for(var i = 0; i < this.length; i++) {
-            if(this[i] === v) return true;
-        }
-        return false;
-    };
+    // Array.prototype.contains = function(v) {
+    //     for(var i = 0; i < this.length; i++) {
+    //         if(this[i] === v) return true;
+    //     }
+    //     return false;
+    // };
 
-    Array.prototype.unique = function() {
-        var arr = [];
-        for(var i = 0; i < this.length; i++) {
-            if(!arr.contains(this[i])) {
-                arr.push(this[i]);
-            }
-        }
-        return arr; 
-    }
+    // Array.prototype.unique = function() {
+    //     var arr = [];
+    //     for(var i = 0; i < this.length; i++) {
+    //         if(!arr.contains(this[i])) {
+    //             arr.push(this[i]);
+    //         }
+    //     }
+    //     return arr; 
+    // }
     
     // list of hashtags
     // var tagName = tagNameDup.unique()[0];
     var tagName = checkedValue;
+    // for (var element in tagName){
+    //     console.log(tagName[element]);
+    // }
     var colorTotal = d3.scale.category20().range();
     var colorful = colorTotal.sort( function() { return 0.5 - Math.random() } ).slice(0, tagName.length);
 
@@ -75,7 +78,12 @@ function dashboard(ContainerDiv, fData, checkedValue) {
     
     // compute total for each state.
     fData.forEach(function(d){
-        d.total=sum(d.freq)
+        //d.total=sum(d.freq);
+        d.total=0;
+        for (var element in tagName){
+            var thisOne = tagName[element];
+            d.total += d.freq[thisOne];
+        }
     });
     
     // function to handle histogram.
