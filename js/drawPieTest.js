@@ -32,7 +32,7 @@ function selectPie(infileObj, containerDiv){
 
         containerDiv
             .datum(plotPiedata)
-            .transition().duration(1200)
+            //.transition().duration(1200)
             .attr('width', width)
             .attr('height', height)
             .call(chart);

@@ -1,10 +1,14 @@
- function drawTable(infile, containerDiv) {
+function drawTable(infile, containerDiv, opt_n) {
+    if (!containerDiv.empty()) {
+        containerDiv.selectAll('*').remove();
+    };
+    var n = opt_n == null ? 10 : opt_n;
     var psv = d3.dsv("|", "text/plain");
     psv(infile, function(error, data) {
         var tweets = data
           .map(function(d) {return{count:+d.count,tweet:d.word};})
           .sort(function(a,b) {return d3.descending(a.count,b.count); })
-          .slice(0,10);
+          .slice(0,n);
     
     var Table = tabulate(tweets, ["count","tweet"]);
     // The table generation function
@@ -27,7 +31,7 @@
             .data(data)
             .enter()
             .append("tr");
-
+        
         // create a cell in each row for each column
         var cells = rows.selectAll("td")
             .data(function(row) {
@@ -44,9 +48,12 @@
     };
 
     });
-};
-function slide(containerDiv, textContainerDiv){ 
-    containerDiv.call(d3.slider().axis(true).min(10).on("slide", function(evt, value) {
-      textContainerDiv.text(value);  
-    }));
+}
+
+function slide(containerDiv, tableDiv, textContainerDiv){ 
+    containerDiv.call(d3.slider().axis(true).min(10)
+        .on("slideend", function(evt, value) {
+            drawTable('data/result_tweet.txt', tableDiv, value);
+            textContainerDiv.text(value);  
+        }));
 };

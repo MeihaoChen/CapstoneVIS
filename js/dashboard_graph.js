@@ -8,13 +8,12 @@ function drawDash(inputObj, ContainerDiv) {
 
         dashboard(ContainerDiv,freqData,r0);
 
-        d3.selectAll('input[type="checkbox"]').on("change", change);
+        d3.selectAll('input[type="checkbox"]').on('change', change);
 
         function change(){
             var radio = $('input:checkbox:checked').map(function() {
                 return this.value;
             }).get();
-            // console.log(radio);
             dashboard(ContainerDiv, freqData,radio); 
         }
     })
@@ -54,7 +53,7 @@ function dashboard(ContainerDiv, fData, checkedValue) {
     //     console.log(tagName[element]);
     // }
     var colorTotal = d3.scale.category20().range();
-    var colorful = colorTotal.sort( function() { return 0.5 - Math.random() } ).slice(0, tagName.length);
+    var colorful = colorTotal.slice(0, tagName.length);
 
     function toObject(names, values) {
         var result = {};
@@ -63,7 +62,9 @@ function dashboard(ContainerDiv, fData, checkedValue) {
         return result;
     }
 
-    function segColor(c){ return toObject(tagName,colorful)[c]; }
+    function segColor(c){ 
+        return toObject(tagName,colorful)[c];
+    }
 
     function sum( obj ) {
         var sum = 0;
@@ -93,7 +94,14 @@ function dashboard(ContainerDiv, fData, checkedValue) {
         hGDim.h = 300 - hGDim.t - hGDim.b;
             
         //create svg for histogram.
-        var hGsvg = ContainerDiv.append("svg")
+        var hGsvg = ContainerDiv.select("svg.histogram");
+        if (hGsvg.empty()) {
+            hGsvg = ContainerDiv.append('svg')
+                .classed('histogram', true);
+        }
+        //hGsvg.selectAll('*').remove();
+
+        hGsvg
             .attr("width", hGDim.w + hGDim.l + hGDim.r)
             .attr("height", hGDim.h + hGDim.t + hGDim.b).append("g")
             .attr("transform", "translate(" + hGDim.l + "," + hGDim.t + ")");
@@ -103,33 +111,51 @@ function dashboard(ContainerDiv, fData, checkedValue) {
                 .domain(fD.map(function(d) { return d[0]; }));
 
         // Add x-axis to the histogram svg.
+        hGsvg.select('g.x.axis').remove();
         hGsvg.append("g").attr("class", "x axis")
             .attr("transform", "translate(0," + hGDim.h + ")")
             .call(d3.svg.axis().scale(x).orient("bottom"));
 
         // Create function for y-axis map.
-        var y = d3.scale.linear().range([hGDim.h, 0])
+        var y = d3.scale.linear().range([hGDim.h, 20])
                 .domain([0, d3.max(fD, function(d) { return d[1]; })]);
 
         // Create bars for histogram to contain rectangles and freq labels.
-        var bars = hGsvg.selectAll(".bar").data(fD).enter()
-                .append("g").attr("class", "bar");
-        
+        var bars = hGsvg.selectAll("g.bar-group").data(fD, function(data) {
+            return data[0];
+        });
+
+        var barsEntered = bars.enter().append('g')
+            .classed('bar-group', true);
+
         //create the rectangles.
-        bars.append("rect")
+        barsEntered
+            .append("rect")
+            .attr("class", "bar")
+            .on("mouseover", mouseover)// mouseover is defined below.
+            .on("mouseout", mouseout);// mouseout is defined below.
+            
+        //Create the frequency labels above the rectangles.
+        barsEntered
+            .append("text")
+            .attr("text-anchor", "middle");
+
+        bars.exit().transition().remove();
+
+        bars.select('rect')
+            .transition()
             .attr("x", function(d) { return x(d[0]); })
             .attr("y", function(d) { return y(d[1]); })
             .attr("width", x.rangeBand())
             .attr("height", function(d) { return hGDim.h - y(d[1]); })
-            .attr('fill',barColor)
-            .on("mouseover",mouseover)// mouseover is defined below.
-            .on("mouseout",mouseout);// mouseout is defined below.
-            
-        //Create the frequency labels above the rectangles.
-        bars.append("text").text(function(d){ return d3.format(",")(d[1])})
+            .attr('fill', barColor);
+
+        bars.select('text')
+            .transition()
+            .text(function(d){ return d3.format(",")(d[1])})
             .attr("x", function(d) { return x(d[0])+x.rangeBand()/2; })
             .attr("y", function(d) { return y(d[1])-5; })
-            .attr("text-anchor", "middle");
+
         
         function mouseover(d){  // utility function to be called on mouseover.
             // filter for selected state.
@@ -175,27 +201,46 @@ function dashboard(ContainerDiv, fData, checkedValue) {
         pieDim.r = Math.min(pieDim.w, pieDim.h) / 2;
                 
         // create svg for pie chart.
-        var piesvg = ContainerDiv.append("svg")
-            .attr("width", pieDim.w).attr("height", pieDim.h).append("g")
+        var piesvg = ContainerDiv.select("svg.piechart");
+        if (piesvg.empty()) {
+            piesvg = ContainerDiv.append('svg')
+                .classed('piechart', true);
+        }
+        piesvg = piesvg
+            .attr("width", pieDim.w)
+            .attr("height", pieDim.h)
+            .append("g")
             .attr("transform", "translate("+pieDim.w/2+","+pieDim.h/2+")");
         
         // create function to draw the arcs of the pie slices.
         var arc = d3.svg.arc().outerRadius(pieDim.r - 10).innerRadius(0);
 
         // create a function to compute the pie slice angles.
-        var pie = d3.layout.pie().sort(null).value(function(d) { return d.freq; });
+        var pie = d3.layout.pie().value(function(d) { return d.freq; });
 
         // Draw the pie slices.
-        piesvg.selectAll("path").data(pie(pD)).enter().append("path").attr("d", arc)
+        var pies = piesvg.selectAll("path").data(pie(pD), function(d) {
+            return d.data.type;
+        });
+
+        var piesEntered = pies.enter();
+        piesEntered.append('path')
             .each(function(d) { this._current = d; })
-            .style("fill", function(d) { return segColor(d.data.type); })
-            .on("mouseover",mouseover).on("mouseout",mouseout);
+            .on("mouseover", mouseover)
+            .on("mouseout", mouseout);
+
+        pies.exit().remove();
+        pies
+            .style("fill", function(d) {
+                return segColor(d.data.type);
+            })
+            .attr("d", arc);
 
         // create function to update pie-chart. This will be used by histogram.
         pC.update = function(nD){
             piesvg.selectAll("path").data(pie(nD)).transition().duration(500)
                 .attrTween("d", arcTween);
-        }        
+        }
         // Utility function to be called on mouseover a pie slice.
         function mouseover(d){
             // call the update function of histogram with new data.
