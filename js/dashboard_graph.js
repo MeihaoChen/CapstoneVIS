@@ -19,15 +19,35 @@ function drawDash(inputObj, ContainerDiv) {
     })
 }
 
-function dashboard(ContainerDiv, fData, checkedValue) { 
-    var barColor = 'steelblue';
+function dashboard(ContainerDiv, freqData, checkedValue) { 
+    var barColor = 'pink';
     var tagNameDup = [];
+
+    // tagName: values for the "checked" checkbox
+    var tagName = checkedValue;
     
-    fData.forEach(function(d){
+    // console.log(tagName);
+    
+    freqData.forEach(function(d){
         tagNameDup.push(
             Object.keys(d.freq)
         );
     });
+
+    // the updated data according to checkedValue
+    fData = [];
+    freqData.forEach(function(d){
+        freq_temp = {};
+        Object.keys(d.freq).forEach(function(g){
+            if (tagName.indexOf(g) > -1) {
+                freq_temp[g] = d.freq[g];
+            }
+        });
+        fData.push(
+            {State:d.State,freq:freq_temp}
+        );
+
+    }); 
 
     // Array.prototype.contains = function(v) {
     //     for(var i = 0; i < this.length; i++) {
@@ -46,14 +66,14 @@ function dashboard(ContainerDiv, fData, checkedValue) {
     //     return arr; 
     // }
     
-    // list of hashtags
-    // var tagName = tagNameDup.unique()[0];
-    var tagName = checkedValue;
-    // for (var element in tagName){
-    //     console.log(tagName[element]);
-    // }
     var colorTotal = d3.scale.category20().range();
-    var colorful = colorTotal.slice(0, tagName.length);
+    
+    // colorful and colorList are made for the most original set of tags
+    // not altered by checked values
+    // so that when checked values change, the color of each tag
+    // does not change 
+    var colorful = colorTotal.slice(0, tagNameDup[0].length);
+    var colorList = toObject(tagNameDup[0],colorful);
 
     function toObject(names, values) {
         var result = {};
@@ -63,7 +83,7 @@ function dashboard(ContainerDiv, fData, checkedValue) {
     }
 
     function segColor(c){ 
-        return toObject(tagName,colorful)[c];
+        return colorList[c];
     }
 
     function sum( obj ) {
@@ -161,16 +181,17 @@ function dashboard(ContainerDiv, fData, checkedValue) {
             // filter for selected state.
             var st = fData.filter(function(s){ return s.State == d[0];})[0],
                 nD = d3.keys(st.freq).map(function(s){ return {type:s, freq:st.freq[s]};});
-               
-            // call update functions of pie-chart and legend.    
+            // call update functions of pie-chart and legend.   
+
             pC.update(nD);
             leg.update(nD);
         }
         
         function mouseout(d){    // utility function to be called on mouseout.
-            // reset the pie-chart and legend.    
+            // reset the pie-chart and legend. 
             pC.update(tF);
             leg.update(tF);
+            // console.log(tF);
         }
         
         // create function to update the bars. This will be used by pie-chart.
@@ -179,7 +200,7 @@ function dashboard(ContainerDiv, fData, checkedValue) {
             y.domain([0, d3.max(nD, function(d) { return d[1]; })]);
             
             // Attach the new data to the bars.
-            var bars = hGsvg.selectAll(".bar").data(nD);
+            var bars = hGsvg.selectAll("g.bar-group").data(nD);
             
             // transition the height and color of rectangles.
             bars.select("rect").transition().duration(500)
@@ -230,6 +251,7 @@ function dashboard(ContainerDiv, fData, checkedValue) {
             .on("mouseout", mouseout);
 
         pies.exit().remove();
+        
         pies
             .style("fill", function(d) {
                 return segColor(d.data.type);
@@ -238,14 +260,17 @@ function dashboard(ContainerDiv, fData, checkedValue) {
 
         // create function to update pie-chart. This will be used by histogram.
         pC.update = function(nD){
-            piesvg.selectAll("path").data(pie(nD)).transition().duration(500)
+            piesvg.selectAll("path.arc-path").data(pie(nD)).transition().duration(500)
                 .attrTween("d", arcTween);
         }
         // Utility function to be called on mouseover a pie slice.
         function mouseover(d){
             // call the update function of histogram with new data.
-            hG.update(fData.map(function(v){ 
-                return [v.State,v.freq[d.data.type]];}),segColor(d.data.type));
+            hG.update(
+                fData.map(function(v){ 
+                    return [v.State,v.freq[d.data.type]];
+                })
+                ,segColor(d.data.type));
         }
         //Utility function to be called on mouseout a pie slice.
         function mouseout(d){
@@ -268,10 +293,20 @@ function dashboard(ContainerDiv, fData, checkedValue) {
         var leg = {};
             
         // create table for legend.
-        var legend = ContainerDiv.append("table").attr('class','legend');
+        // var legend = ContainerDiv.append("table").attr('class','legend');
+        
+        var legend = ContainerDiv.selectAll("table.legend");
+        if (legend.empty()) {
+            // legend = ContainerDiv.append('table')
+            legend = ContainerDiv.append('table')
+                //.attr('class','legend');
+                .classed('legend',true);
+
+        }
         
         // create one row per segment.
         var tr = legend.append("tbody").selectAll("tr").data(lD).enter().append("tr");
+
             
         // create the first column for each segment.
         tr.append("td").append("svg").attr("width", '16').attr("height", '16').append("rect")
@@ -288,6 +323,8 @@ function dashboard(ContainerDiv, fData, checkedValue) {
         // create the fourth column for each segment.
         tr.append("td").attr("class",'legendPerc')
             .text(function(d){ return getLegend(d,lD);});
+
+
 
         // Utility function to be used to update the legend.
         leg.update = function(nD){
@@ -309,12 +346,15 @@ function dashboard(ContainerDiv, fData, checkedValue) {
     }
     
     // calculate total frequency by segment for all state.
-    var tF = tagName.map(function(d){ 
+    var tF = tagName.map(function(d){
         return {type:d, freq: d3.sum(fData.map(function(t){ 
             return t.freq[d];})
         )}; 
-    });  
-    
+    }); 
+
+
+    //console.log(tF);
+
     // calculate total frequency by state for all segment.
     var sF = fData.map(function(d){return [d.State,d.total];});
 
