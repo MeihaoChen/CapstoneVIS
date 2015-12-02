@@ -260,7 +260,7 @@ function dashboard(ContainerDiv, freqData, checkedValue) {
 
         // create function to update pie-chart. This will be used by histogram.
         pC.update = function(nD){
-            piesvg.selectAll("path.arc-path").data(pie(nD)).transition().duration(500)
+            piesvg.selectAll("path").data(pie(nD)).transition().duration(500)
                 .attrTween("d", arcTween);
         }
         // Utility function to be called on mouseover a pie slice.
@@ -297,17 +297,24 @@ function dashboard(ContainerDiv, freqData, checkedValue) {
         
         var legend = ContainerDiv.selectAll("table.legend");
         if (legend.empty()) {
-            // legend = ContainerDiv.append('table')
             legend = ContainerDiv.append('table')
-                //.attr('class','legend');
-                .classed('legend',true);
-
+            //legend = ContainerDiv.append('table')
+                .attr('class','legend');
+                //.classed('legend',true);
         }
         
         // create one row per segment.
-        var tr = legend.append("tbody").selectAll("tr").data(lD).enter().append("tr");
+        //var tr = legend.append("tbody").selectAll("tr").data(lD).enter().append("tr");
+        var tr = legend.select('tbody').remove('tr').selectAll("tr").data(lD).enter();
+        
+        if (legend.select('tbody').empty()){
+            tr = legend.append("tbody")
+            .selectAll('tr')
+            .data(lD)
+            .enter()
+            .append("tr");
+        }
 
-            
         // create the first column for each segment.
         tr.append("td").append("svg").attr("width", '16').attr("height", '16').append("rect")
             .attr("width", '16').attr("height", '16')
@@ -322,9 +329,7 @@ function dashboard(ContainerDiv, freqData, checkedValue) {
 
         // create the fourth column for each segment.
         tr.append("td").attr("class",'legendPerc')
-            .text(function(d){ return getLegend(d,lD);});
-
-
+            .text(function(d){ return getLegend(d,lD);})
 
         // Utility function to be used to update the legend.
         leg.update = function(nD){
