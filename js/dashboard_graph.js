@@ -163,6 +163,8 @@ function dashboard(ContainerDiv, freqData, checkedValue) {
         bars.exit().transition().remove();
 
         bars.select('rect')
+            .on('mouseover',mouseover)
+            .on('mouseout', mouseout)
             .transition()
             .attr("x", function(d) { return x(d[0]); })
             .attr("y", function(d) { return y(d[1]); })
@@ -181,7 +183,7 @@ function dashboard(ContainerDiv, freqData, checkedValue) {
             // filter for selected state.
             var st = fData.filter(function(s){ return s.State == d[0];})[0],
                 nD = d3.keys(st.freq).map(function(s){ return {type:s, freq:st.freq[s]};});
-            // call update functions of pie-chart and legend.   
+            // call update functions of pie-chart and legend. 
 
             pC.update(nD);
             leg.update(nD);
@@ -356,9 +358,7 @@ function dashboard(ContainerDiv, freqData, checkedValue) {
             return t.freq[d];})
         )}; 
     }); 
-
-
-    //console.log(tF);
+    console.log(tF.length);
 
     // calculate total frequency by state for all segment.
     var sF = fData.map(function(d){return [d.State,d.total];});
