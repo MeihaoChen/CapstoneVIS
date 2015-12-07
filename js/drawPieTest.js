@@ -21,8 +21,9 @@ function selectPie(infileObj, containerDiv){
     var other = d3.sum(piedata.slice(5,piedata.length), function(d) {return d.y;});
     plotPiedata.push({key: 'other', y: other});
     
-    var height = 550;
-    var width = 550;
+    var margin = {top: 10, right: 10, bottom: 10, left: 10};
+    var width = 960 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
     nv.addGraph(function() {
         var chart = nv.models.pieChart()
             .x(function(d) { return d.key })

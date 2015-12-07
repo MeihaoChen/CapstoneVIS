@@ -1,4 +1,5 @@
 function drawTable(infile, containerDiv, opt_n) {
+
     if (!containerDiv.empty()) {
         containerDiv.selectAll('*').remove();
     };

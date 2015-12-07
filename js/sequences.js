@@ -1,7 +1,8 @@
  function drawSunburst() {
   // Dimensions of sunburst.
-  var width = 1000;
-  var height = 800;
+  var margin = {top: 20, right: 10, bottom: 20, left: 10};
+  var width = 960 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
   var radius = Math.min(width, height) / 2;
 
   // Breadcrumb dimensions: width, height, spacing, width of tip/tail.

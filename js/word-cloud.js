@@ -1,6 +1,7 @@
 function drawCloud(containerDiv) {
-  var width = 750,
-      height = 500,
+  var margin = {top: 20, right: 10, bottom: 20, left: 10};
+  var width = 960 - margin.left - margin.right,
+      height = 500 - margin.top - margin.bottom;
       scale = 700;
 
   //var nameScale = d3.scale.linear().range([10,150]);
