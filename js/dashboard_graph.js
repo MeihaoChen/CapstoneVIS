@@ -1,4 +1,4 @@
-function drawDash(inputObj, ContainerDiv) {
+function drawDash(ContainerDiv) {
     d3.json('./data/dashboard_data.json', function(error, freqData){
         if (error) throw error;
         // var r0 = d3.selectAll('input[type="checkbox"]:checked').node().value;
@@ -358,7 +358,6 @@ function dashboard(ContainerDiv, freqData, checkedValue) {
             return t.freq[d];})
         )}; 
     }); 
-    console.log(tF.length);
 
     // calculate total frequency by state for all segment.
     var sF = fData.map(function(d){return [d.State,d.total];});

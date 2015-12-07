@@ -2,12 +2,13 @@ $(document).ready(init);
 
 function init() {
 
-	var dashFile = {'WhyImNotVotingForHillary': 'WhyImNotVotingForHillary','Hillary2016':'Hillary2016',
-	 				'HillaryClinton':'HillaryClinton', 'Hillary':'Hillary',
-					'tcot':'tcot'}
+	// var dashFile = {'WhyImNotVotingForHillary': 'WhyImNotVotingForHillary','Hillary2016':'Hillary2016',
+	//  				'HillaryClinton':'HillaryClinton', 'Hillary':'Hillary',
+	// 				'tcot':'tcot'}
 
 	drawCloud("data_o/wordCount.csv", d3.select('#word-cloud'));
 	showReel("data_o/data_tweet.csv", d3.select('#showReel'));
+	checkBoxes(d3.select('#dashboard'));
 	drawDash(d3.select('#dashboard'));
 	drawHier("data_o/hier_bund.json",d3.select('#hier'));
 	drawSunburst("data_o/color_profile.json", "data_o/tweet_text.csv");
