@@ -26,7 +26,7 @@ function checkBoxes(ContainedDiv){
         	var label = document.createElement('label');
         	label.innerHTML = g;
         	parentElement.appendChild(label);
-        	console.log(label);
+        	// console.log(label);
 
 		})
     })
