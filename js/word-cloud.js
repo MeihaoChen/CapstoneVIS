@@ -29,8 +29,8 @@ function drawCloud(containerDiv) {
   });
   function draw(words) {
     containerDiv.append("svg")
-        .attr("width", width)
-        .attr("height", height)
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
       .append("g")
         .attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")")
       .selectAll("text")

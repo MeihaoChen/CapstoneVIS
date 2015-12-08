@@ -4,21 +4,9 @@
   var width = 960 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
   var radius = Math.min(width, height) / 2;
-
-  // Breadcrumb dimensions: width, height, spacing, width of tip/tail.
   var b = {
     w: 90, h: 30, s: 3, t: 10
   };
-
-  // Mapping of step names to colors.
-  // var colors = {
-  //   "home": "#5687d1",
-  //   "product": "#7b615c",
-  //   "search": "#de783b",
-  //   "account": "#6ab975",
-  //   "other": "#a173d1",
-  //   "end": "#bbbbbb"
-  // };
 
   var colors;
 

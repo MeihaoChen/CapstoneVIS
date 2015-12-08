@@ -9,13 +9,15 @@ function init() {
 	drawSunburst();
 	drawTable('data/result_tweet.txt',d3.select('#table'));
 	slide(d3.select('#slider'),d3.select('#table'),d3.select('#sliderText'));
-
 	var pieFiles = {'hashtag':'data/hashCount.csv',
 	                'geolocation':'data/locaCount.csv',
 	                'source':'data/sourceCount.csv',
 	                'user':'data/userCount.csv'}	
 	selectPie(pieFiles, d3.select('#pie1'));
+	$('.placeholders').hide(); 
+	$('#plot1').show();
 
+	
 	$('#b1').click(function(){
 		$('.placeholders').slideUp();
 		$('#plot1').slideDown();
@@ -45,11 +47,8 @@ function init() {
 		$('#plot7').slideDown();
 	});
 
-	
-	
-
-	$('.nav-sidebar').click(function() {
-		$('.nav-sidebar').removeClass('active');
+	$('.nav-sidebar a').click(function() {
+		$('.nav-sidebar a').removeClass('active');
 		$(this).addClass('active');
 	});
 }

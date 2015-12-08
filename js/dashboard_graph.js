@@ -48,23 +48,6 @@ function dashboard(ContainerDiv, freqData, checkedValue) {
         );
 
     }); 
-
-    // Array.prototype.contains = function(v) {
-    //     for(var i = 0; i < this.length; i++) {
-    //         if(this[i] === v) return true;
-    //     }
-    //     return false;
-    // };
-
-    // Array.prototype.unique = function() {
-    //     var arr = [];
-    //     for(var i = 0; i < this.length; i++) {
-    //         if(!arr.contains(this[i])) {
-    //             arr.push(this[i]);
-    //         }
-    //     }
-    //     return arr; 
-    // }
     
     var colorTotal = d3.scale.category20().range();
     
@@ -295,18 +278,14 @@ function dashboard(ContainerDiv, freqData, checkedValue) {
         var leg = {};
             
         // create table for legend.
-        // var legend = ContainerDiv.append("table").attr('class','legend');
         
         var legend = ContainerDiv.selectAll("table.legend");
         if (legend.empty()) {
             legend = ContainerDiv.append('table')
-            //legend = ContainerDiv.append('table')
                 .attr('class','legend');
-                //.classed('legend',true);
         }
         
         // create one row per segment.
-        //var tr = legend.append("tbody").selectAll("tr").data(lD).enter().append("tr");
         var tr = legend.select('tbody').remove('tr').selectAll("tr").data(lD).enter();
         
         if (legend.select('tbody').empty()){

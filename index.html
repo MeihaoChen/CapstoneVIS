@@ -23,7 +23,7 @@
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
     <link rel="stylesheet" type="text/css" href="bower_components/d3-slider/d3.slider.css">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
-    <script type="text/javascript" src="js/drawPieTest.js"></script> 
+    <script type="text/javascript" src="js/drawPie.js"></script> 
     <script type="text/javascript" src="js/table.js"></script>
     <script type="text/javascript" src="js/show_reel.js"></script> 
     <script type="text/javascript" src="js/dashboard_graph.js"></script> 
@@ -62,21 +62,29 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar" id='navigate'>
-            <li class="active"><a id='b1' href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a id='b2' href="#">Popular Tweets</a></li>
-            <li><a id='b3' href="#">Word Cloud</a></li>
-            <li><a id='b4' href="#">Show Reel</a></li>
-            <li><a id='b5' href="#">Dashboard</a></li>
-            <li><a id='b6' href="#">Network</a></li>
-            <li><a id='b7' href="#">Word Sequence</a></li>
-          </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="">Export</a></li>
-          </ul>
+            <div id="MainMenu">
+              <div class="list-group panel">
+                <a href="#demo3" class="list-group-item list-group-item-success active" data-toggle="collapse" data-parent="#MainMenu">Overview</a>
+                <div class="collapse" id="demo3">
+                  <a href="#" id="b1"class="list-group-item">Pie Chart</i></a>
+                  <a href="#" class="list-group-item">Subitem 2</a>
+                  <a href="#" class="list-group-item">Subitem 3</a>
+                </div>
+                <a href="#" id="b2" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Popular Tweets</a>
+                <a href="#" id="b3" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Word Cloud</a>
+                <a href="#" id="b4" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Show Reel</a>
+                <a href="#" id="b5" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Dashboard</a>
+                <a href="#" id="b6" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Network</a>
+                <a href="#" id="b7" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Word Sequence</a>
+                <a href="#" class="list-group-item list-group-item-success" data-toggle="collapse" data-parent="#MainMenu">Export</a>
+              </div>
+            </div>
         </div>
+
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-         <div class="row placeholders" id="plot1">
+
+          <div class="row placeholders" id="plot1">
             <div class="col-xs-8 col-sm-12 placeholder">
               <svg id="pie1"></svg>
             </div>
