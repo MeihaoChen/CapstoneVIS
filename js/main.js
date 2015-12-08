@@ -10,10 +10,12 @@ function init() {
 	drawTable('data/result_tweet.txt',d3.select('#table'));
 	slide(d3.select('#slider'),d3.select('#table'),d3.select('#sliderText'));
 	var pieFiles = {'hashtag':'data/hashCount.csv',
-	                'geolocation':'data/locaCount.csv',
+	                //'geolocation':'data/locaCount.csv',
+	                'coordinates':'data/stateCount.csv',
 	                'source':'data/sourceCount.csv',
 	                'user':'data/userCount.csv'}	
 	selectPie(pieFiles, d3.select('#pie1'));
+	stackArea();
 	$('.placeholders').hide(); 
 	$('#plot1').show();
 
@@ -46,11 +48,22 @@ function init() {
 		$('.placeholders').slideUp();
 		$('#plot7').slideDown();
 	});
-
+	$('#b8').click(function(){
+		$('.placeholders').slideUp();
+		$('#plot8').slideDown();
+	});
 	$('.nav-sidebar a').click(function() {
 		$('.nav-sidebar a').removeClass('active');
 		$(this).addClass('active');
 	});
+	$(function () {
+
+    var specialElementHandlers = {
+        '#editor': function (element,renderer) {
+            return true;
+        }
+    };
+});
 }
 
 
