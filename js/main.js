@@ -1,7 +1,7 @@
 $(document).ready(init);
 
 function init() {
-	drawCloud(d3.select('#word-cloud'));
+	drawCloud("data/wordCount.csv", d3.select('#word-cloud'));
 	showReel(d3.select('#showReel'));
 	checkBoxes(d3.select('#dashboard'));
 	drawDash(d3.select('#dashboard'));
@@ -9,13 +9,9 @@ function init() {
 	drawSunburst();
 	drawTable('data/result_tweet.txt',d3.select('#table'));
 	slide(d3.select('#slider'),d3.select('#table'),d3.select('#sliderText'));
-
-
-	lineGraph(d3.select('#lineGraph'));
-	stackedArea(d3.select('#horizonGraph svg'));
+	stackedArea('data/data_tweet.json', d3.select('#horizonGraph svg'));
 
 	var pieFiles = {'hashtag':'data/hashCount.csv',
-	                //'geolocation':'data/locaCount.csv',
 	                'coordinates':'data/stateCount.csv',
 	                'source':'data/sourceCount.csv',
 	                'user':'data/userCount.csv'}	
@@ -56,6 +52,7 @@ function init() {
 		$('.placeholders').slideUp();
 		$('#plot8').slideDown();
 	});
+
 	$('#exp').click(function(){
 		$('.placeholders').slideDown();
 		var doc = new jsPDF();
@@ -70,6 +67,7 @@ function init() {
     	});
     	doc.save('sample-file.pdf');
 	});
+
 	$('.nav-sidebar a').click(function() {
 		$('.nav-sidebar a').removeClass('active');
 		$(this).addClass('active');

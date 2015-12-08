@@ -1,4 +1,4 @@
-function drawCloud(containerDiv) {
+function drawCloud(infile, containerDiv) {
   var margin = {top: 20, right: 10, bottom: 20, left: 10};
   var width = 960 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
@@ -7,7 +7,7 @@ function drawCloud(containerDiv) {
   //var nameScale = d3.scale.linear().range([10,150]);
 
   var fill = d3.scale.category20();
-  d3.csv("data/wordCount.csv", function(data) {
+  d3.csv(infile, function(data) {
     var names = data
           .map(function(d) {return{text:d.word, size:+d.count/scale, count:+d.count};})
           .sort(function(a,b) {return d3.descending(a.size,b.size); })
