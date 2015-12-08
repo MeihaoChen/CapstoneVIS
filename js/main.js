@@ -52,6 +52,20 @@ function init() {
 		$('.placeholders').slideUp();
 		$('#plot8').slideDown();
 	});
+	$('#exp').click(function(){
+		$('.placeholders').slideDown();
+		var doc = new jsPDF();
+		var specialElementHandlers = {
+    	'#exp': function (element, renderer) {
+        	return true;
+        }
+    };
+        doc.fromHTML($('#main').html(), 15, 15, {
+        	'width': 170,
+            	'elementHandlers': specialElementHandlers
+    	});
+    	doc.save('sample-file.pdf');
+	});
 	$('.nav-sidebar a').click(function() {
 		$('.nav-sidebar a').removeClass('active');
 		$(this).addClass('active');
