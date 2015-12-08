@@ -9,13 +9,17 @@ function init() {
 	drawSunburst();
 	drawTable('data/result_tweet.txt',d3.select('#table'));
 	slide(d3.select('#slider'),d3.select('#table'),d3.select('#sliderText'));
+
+
+	lineGraph(d3.select('#lineGraph'));
+	stackedArea(d3.select('#horizonGraph svg'));
+
 	var pieFiles = {'hashtag':'data/hashCount.csv',
 	                //'geolocation':'data/locaCount.csv',
 	                'coordinates':'data/stateCount.csv',
 	                'source':'data/sourceCount.csv',
 	                'user':'data/userCount.csv'}	
 	selectPie(pieFiles, d3.select('#pie1'));
-	stackArea();
 	$('.placeholders').hide(); 
 	$('#plot1').show();
 
