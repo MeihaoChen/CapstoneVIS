@@ -15,7 +15,7 @@ function drawTable(infile, containerDiv, opt_n) {
     // The table generation function
     function tabulate(data, columns) {
         var table = containerDiv.append("table")
-                .attr("style", "margin-left: 50px"),
+                .attr("style", "margin-left: 50px", "margin-top:200px"),
             thead = table.append("thead"),
             tbody = table.append("tbody");
 

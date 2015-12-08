@@ -1,10 +1,7 @@
 function selectPie(infileObj, containerDiv){ 
   var r0 = d3.select('input[name="pieChart"]:checked').node().value;
   drawPie(infileObj[r0], containerDiv);
-
-  d3.selectAll("input")
-      .on("change", change);
-
+  d3.selectAll("input").on("change", change);
   function change(){
     var radio = d3.select('input[name="pieChart"]:checked').node().value;
     drawPie(infileObj[radio], containerDiv); 
@@ -17,8 +14,8 @@ function selectPie(infileObj, containerDiv){
     var piedata = data
           .map(function(d) {return{key:d.word, y:+d.count};})
           .sort(function(a,b) {return d3.descending(a.y,b.y);})
-    var plotPiedata = piedata.slice(0,5);
-    var other = d3.sum(piedata.slice(5,piedata.length), function(d) {return d.y;});
+    var plotPiedata = piedata.slice(0,10);
+    var other = d3.sum(piedata.slice(10,piedata.length), function(d) {return d.y;});
     plotPiedata.push({key: 'other', y: other});
     
     var margin = {top: 10, right: 10, bottom: 10, left: 10};
@@ -33,7 +30,6 @@ function selectPie(infileObj, containerDiv){
 
         containerDiv
             .datum(plotPiedata)
-            //.transition().duration(1200)
             .attr('width', width)
             .attr('height', height)
             .call(chart);
