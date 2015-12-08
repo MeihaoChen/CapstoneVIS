@@ -16,6 +16,8 @@ function init() {
 	drawDash(d3.select('#dashboard'));
 	drawHier(d3.select('#hier'));
 	drawSunburst();
+	lineGraph(d3.select('#lineGraph'));
+	stackedArea(d3.select('#horizonGraph svg'));
 
 	var pieFiles = {'hashtag':'data/hashCount.csv',
 	                'geolocation':'data/locaCount.csv',
