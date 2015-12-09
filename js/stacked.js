@@ -8,10 +8,9 @@ function stackedArea(infile, containerDiv){
                   .rightAlignYAxis(true)      //Let's move the y-axis to the right side.
                   .showControls(true)       //Allow user to choose 'Stacked', 'Stream', 'Expanded' mode.
                   .clipEdge(true);
-    var margin = {top: 10, right: 10, bottom: 10, left: 10};
+    var margin = {top: 20, right: 10, bottom: 20, left: 10};
     var width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
-
     //Format x-axis labels with custom function.
     chart.xAxis
         .tickFormat(function(d) { 
@@ -19,7 +18,7 @@ function stackedArea(infile, containerDiv){
     });
 
     chart.yAxis
-        .tickFormat(d3.format(',.2f'));
+         .tickFormat(d3.format(',.2f'));
 
     d3.select('#horizonGraph')
       .datum(data)

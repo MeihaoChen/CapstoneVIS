@@ -1,20 +1,20 @@
 $(document).ready(init);
 
 function init() {
-	drawCloud("data/wordCount.csv", d3.select('#word-cloud'));
+	drawCloud("data/word.csv", d3.select('#word-cloud'));
 	showReel(d3.select('#showReel'));
 	checkBoxes(d3.select('#dashboard'));
 	drawDash(d3.select('#dashboard'));
 	drawHier(d3.select('#hier'));
 	drawSunburst();
-	drawTable('data/result_tweet.txt',d3.select('#table'));
+	drawTable('data/tweet.csv',d3.select('#table'));
 	slide(d3.select('#slider'),d3.select('#table'),d3.select('#sliderText'));
 	stackedArea('data/data_tweet.json', d3.select('#horizonGraph svg'));
 
-	var pieFiles = {'hashtag':'data/hashCount.csv',
-	                'coordinates':'data/stateCount.csv',
-	                'source':'data/sourceCount.csv',
-	                'user':'data/userCount.csv'}	
+	var pieFiles = {'hashtag':'data/hashtag.csv',
+	                'coordinates':'data/coordinates.csv',
+	                'source':'data/source.csv',
+	                'user':'data/mention.csv'}	
 	selectPie(pieFiles, d3.select('#pie1'));
 	$('.placeholders').hide(); 
 	$('#plot1').show();
