@@ -35,7 +35,7 @@
     <script type="text/javascript" src="js/checkbox.js"></script>
     <script type="text/javascript" src="js/stacked.js"></script>
     <script type="text/javascript" src="js/jspdf.min.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/main_test.js"></script>
     <link rel="stylesheet" href="css/introjs.css" />
     <script src="js/intro.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -148,13 +148,15 @@
           </div>
 
           <div class="row placeholders" id="plot8">
-            <form id='here'>
-                <label><input type="radio" name="stacked" value="hashtag" > Hashtag</label>
-                <label><input type="radio" name="stacked" value="source" > Source</label>
-                <label><input type="radio" name="stacked" value="mentions" checked> User Mention</label>
-            </form>
-            <svg class="col-xs-12 col-sm-8 placeholder" id="horizonGraph" style="width:960px; height:600px; vertical-align: center;  display: inline-block; padding: 10px;">
+            <svg class="col-xs-12 col-sm-8 placeholder" id="horizonGraph" style="width:960px; height:550px; vertical-align: center;  display: inline-block; padding: 10px;">
             </svg>
+            <div class="col-xs-2 col-sm-12 placeholder center">
+              <form>
+                <label><input type="radio" name="stacked" value="hashtag" checked> Hashtag</label>
+                <label><input type="radio" name="stacked" value="source" > Source</label>
+                <label><input type="radio" name="stacked" value="mentions" > User Mention</label>
+              </form>
+            </div>
           </div>
       </div>
 
