@@ -49,6 +49,7 @@ function drawHier(infile,containerDiv) {
 	      .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
 	      .style("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
 	      .text(function(d) { return d.key; })
+	      .style("font-size","8px")
 	      .on("mouseover", mouseovered)
 	      .on("mouseout", mouseouted);
 	});
