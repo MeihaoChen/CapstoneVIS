@@ -1,4 +1,4 @@
-function drawSunburst(infile,containerDiv) {
+function drawSunburst(infile,colorFile,containerDiv) {
   // Dimensions of sunburst.
   var margin = {top: 20, right: 10, bottom: 20, left: 10};
   var width = 960 - margin.left - margin.right,
@@ -10,7 +10,7 @@ function drawSunburst(infile,containerDiv) {
 
   var colors;
 
-  d3.json("data/color_profile.json", function(error, data) {
+  d3.json(colorFile, function(error, data) {
     if (error) throw error;
     
     colors = data;

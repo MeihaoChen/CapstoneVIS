@@ -6,7 +6,7 @@ function init() {
 	checkBoxes('./data/dashboard_data.json', d3.select('#dashboard'));
 	drawDash('./data/dashboard_data.json', d3.select('#dashboard'));
 	drawHier('./data/hier_bund.json', d3.select('#hier'));
-	drawSunburst('./data/tweet_text.csv', d3.select("#chart"));
+	drawSunburst('./data/tweet_text.csv', "data/color_profile.json", d3.select("#chart"));
 	drawTable('data/tweet.csv',d3.select('#table'));
 	slide('data/result_tweet.txt', d3.select('#slider'),d3.select('#table'),d3.select('#sliderText'));
 	stackedArea('data/data_tweet.json', d3.select('#horizonGraph svg'));
