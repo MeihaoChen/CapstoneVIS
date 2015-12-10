@@ -65,7 +65,7 @@ function init() {
         	'width': 170,
             	'elementHandlers': specialElementHandlers
     	});
-    	doc.save('sample-file.pdf');
+    	doc.save('Dahlia.pdf');
 	});
 
 	$('.nav-sidebar a').click(function() {
