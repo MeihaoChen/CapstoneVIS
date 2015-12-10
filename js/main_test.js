@@ -9,9 +9,9 @@ function init() {
 	drawSunburst('./data_o/tweet_text.csv', "data_o/color_profile.json", d3.select("#chart"));
 	drawTable('data_o/tweet.csv',d3.select('#table'));
 	slide('data_o/tweet.csv', d3.select('#slider'),d3.select('#table'),d3.select('#sliderText'));
+
 	var stackFiles = {'hashtag':'data_o/data_tweet_hash.json',
 	'source':'data_o/data_tweet_source.json','mentions':'data_o/data_tweet_mentions.json'};
-
 	selectStack(stackFiles, d3.select('#horizonGraph svg'));
 
 	var pieFiles = {'hashtag':'data_o/hashtag.csv',
